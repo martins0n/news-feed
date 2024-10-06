@@ -45,7 +45,6 @@ cookies.set("channels_selected", channels)
 col1, col2 = st.columns(2)
 
 with col1:
-    # 0:00:00 today
     start_date = st.date_input(
         "Start date",
         value=datetime.datetime.now().replace(
@@ -69,7 +68,7 @@ def get_feed(start_date, end_date, channels):
 
     for channel in channels:
         try:
-            messages_ = get_messages(channel, start_date, end_date, 10)
+            messages_ = get_messages(channel, start_date, end_date, settings.number_of_messages_per_channel)
             for message in messages_:
 
                 messages.append(
