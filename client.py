@@ -66,14 +66,14 @@ def sync_fetch_and_save_messages(
     return messages
 
 
-if __name__ == "__main__":
-    client = TelegramClient(session_name, api_id, api_hash)
-    messages = sync_fetch_and_save_messages(
-        client,
-        "astrapress",
-        datetime.datetime.now() - datetime.timedelta(days=33),
-        datetime.datetime.now(),
-        10,
-    )
+async def test():
+    async with TelegramClient(session_name, api_id, api_hash) as client:
+        print(
+            await fetch_messages(
+                client, "telegram", datetime.datetime.now(), datetime.datetime.now(), 10
+            )
+        )
 
-    print(messages)
+
+if __name__ == "__main__":
+    asyncio.run(test())

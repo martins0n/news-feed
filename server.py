@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from datetime import datetime
 
 from fastapi import FastAPI, Request
@@ -12,9 +13,18 @@ api_id = telegram_settings.api_id
 api_hash = telegram_settings.api_hash
 session_name = telegram_settings.session_name
 
-telegram_client = TelegramClient(session_name, api_id, api_hash)
+telegram_client = None
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global telegram_client
+    telegram_client = TelegramClient(session_name, api_id, api_hash)
+    yield
+    await telegram_client.disconnect()
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/messages")

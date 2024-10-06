@@ -68,7 +68,9 @@ def get_feed(start_date, end_date, channels):
 
     for channel in channels:
         try:
-            messages_ = get_messages(channel, start_date, end_date, settings.number_of_messages_per_channel)
+            messages_ = get_messages(
+                channel, start_date, end_date, settings.number_of_messages_per_channel
+            )
             for message in messages_:
 
                 messages.append(
