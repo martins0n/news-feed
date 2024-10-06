@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "news-feed-v2"
+version = "0.1.0"
+description = ""
+authors = ["martins0n <33594071+martins0n@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pymongo = {extras = ["srv"], version = "^4.10.1"}
+streamlit = "^1.39.0"
+pydantic = "^2.9.2"
+telethon = "^1.37.0"
+pydantic-settings = "^2.5.2"
+fastapi = {extras = ["standard"], version = "^0.115.0"}
+openai = "1.49.*"
+loguru = "^0.7.2"
+streamlit-cookies-controller = "^0.0.4"
+
+
+[tool.poetry.group.dev.dependencies]
+watchdog = "^5.0.3"
+black = "^24.8.0"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
