@@ -2,6 +2,7 @@ import datetime
 import hashlib
 import shelve
 
+import jwt
 import streamlit as st
 from httpx import Client
 from loguru import logger
@@ -15,7 +16,6 @@ settings = Settings()
 cookies = CookieController()
 
 all_cookies = cookies.getAll()
-
 
 
 def get_messages(channel, start_date, end_date, limit):
@@ -43,9 +43,25 @@ def make_feed(messages) -> Feed:
 
 st.title("News Feed")
 
+
+def get_email_from_cf_token(token):
+    try:
+        decoded_token = jwt.decode(token, options={"verify_signature": False})
+        return decoded_token.get("email", "Email not found in token")
+    except jwt.DecodeError:
+        return "Invalid token"
+
+
 user = cookies.get("CF_Authorization")
+if user is not None:
+    user = get_email_from_cf_token(user)
+
 if user is None:
     user = cookies.get("_streamlit_xsrf")
+
+if user is None:
+    user = ""
+
 user_hash = hashlib.sha256(user.encode()).hexdigest()
 
 
@@ -135,6 +151,4 @@ st.button(
 st.markdown(st.session_state.get("feed", ""))
 
 with st.expander("debug"):
-    st.write(
-        all_cookies
-    )
+    st.write(all_cookies)
