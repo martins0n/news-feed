@@ -14,6 +14,9 @@ from settings import Settings
 settings = Settings()
 cookies = CookieController()
 
+all_cookies = cookies.getAll()
+
+
 
 def get_messages(channel, start_date, end_date, limit):
     client = Client(timeout=60 * 4)
@@ -130,3 +133,8 @@ st.button(
 
 
 st.markdown(st.session_state.get("feed", ""))
+
+with st.expander("debug"):
+    st.write(
+        all_cookies
+    )
