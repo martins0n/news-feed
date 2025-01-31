@@ -10,3 +10,8 @@ services:
       - 8501:8501
     env_file:
       - .env
+    volumes:
+      - api_data:/app/data
+
+volumes:
+  api_data:

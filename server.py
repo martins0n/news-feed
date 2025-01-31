@@ -4,6 +4,7 @@ from datetime import datetime
 from fastapi import FastAPI, Request
 
 from client import TelegramClient, TelegramSettings, fetch_messages
+from gpt import Feed
 from gpt import make_feed as make_feed_gpt
 from model import Message
 
@@ -50,7 +51,7 @@ async def get_messages(
 @app.post("/make_feed")
 async def make_feed(
     request: Request,
-) -> str:
+) -> Feed:
     r = await request.json()
     r = r["messages"]
     feed = await make_feed_gpt(r)
