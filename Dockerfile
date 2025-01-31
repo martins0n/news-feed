@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . /app
 
 RUN pip install --upgrade pip && \
-    pip install poetry
+    pip install poetry==1.6.1
 
 RUN poetry config virtualenvs.create false
 
